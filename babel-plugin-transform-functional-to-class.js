@@ -4,12 +4,37 @@ module.exports = function ({ types: t }) {
       FunctionDeclaration(path) {
         const { node } = path;
 
-        // Assuming the function name is "App"
-        if (node.id) {
+        // Check if the function contains a JSX return statement
+        let containsJSX = false;
+
+        path.traverse({
+          ReturnStatement(returnPath) {
+            if (t.isJSXElement(returnPath.node.argument)) {
+              containsJSX = true;
+            }
+          },
+        });
+
+        if (containsJSX) {
           // Check if the binding already exists in the current scope
-          /* if (path.scope.hasBinding(node.id.name, true)) {
+          if (path.scope.hasBinding(node.id.name, true)) {
             path.scope.removeBinding(node.id.name);
-          } */
+          }
+
+          // Extract the body statements from the function
+          const bodyStatements = node.body.body;
+
+          // Separate the constructor statements and the render return statement
+          const constructorStatements = [];
+          let renderReturnStatement;
+
+          bodyStatements.forEach((statement) => {
+            if (t.isReturnStatement(statement)) {
+              renderReturnStatement = statement;
+            } else {
+              constructorStatements.push(statement);
+            }
+          });
 
           // Create the class constructor method
           const constructorMethod = t.classMethod(
@@ -18,15 +43,16 @@ module.exports = function ({ types: t }) {
             [],
             t.blockStatement([
               t.expressionStatement(t.callExpression(t.super(), [])),
+              ...constructorStatements,
             ])
           );
 
           // Create the render method
           const renderMethod = t.classMethod(
             "method",
-            t.identifier("html"),
+            t.identifier("render"),
             [], // Empty parameter list for render method
-            node.body.body.pop().node // The body of the original function
+            t.blockStatement([renderReturnStatement]) // The return statement from the original function
           );
 
           // Create the class declaration

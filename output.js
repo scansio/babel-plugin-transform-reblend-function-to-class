@@ -13,12 +13,12 @@ function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e
 class App {
   constructor() {
     super();
-  }
-  render() {
     const [state, setState] = (0, _reblendjs.useState)(0);
     setInterval(() => {
       setState(state + 1);
     }, 1000);
+  }
+  render() {
     return <div className="App">
       <header className="App-header">
         <img src={_logo.default} className="App-logo" alt="logo" />
