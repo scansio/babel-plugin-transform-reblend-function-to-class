@@ -1,35 +1,24 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-var _logo = _interopRequireDefault(require("./logo.svg"));
-require("./App.css");
-var _reblendjs = _interopRequireWildcard(require("reblendjs"));
-function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
-function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
-class App {
-  constructor() {
-    super();
-    const [state, setState] = (0, _reblendjs.useState)(0);
-    setInterval(() => {
-      setState(state + 1);
-    }, 1000);
-  }
-  render() {
-    return <div className="App">
-      <header className="App-header">
-        <img src={_logo.default} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload. {state}
-        </p>
-        <a className="App-link" href="https://reblendjs.org" target="_blank" rel="noopener noreferrer">
-          Learn Reblend
-        </a>
-      </header>
-    </div>;
-  }
+import logo from "./logo.svg";
+import "./App.css";
+import Reblend, { useState } from "reblendjs";
+function App() {
+  const [state, setState] = useState(0);
+  setInterval(() => {
+    setState(state + 1);
+  }, 1000);
+  return /*#__PURE__*/Reblend.construct(Reblend, null, /*#__PURE__*/Reblend.construct("div", {
+    className: "App"
+  }, /*#__PURE__*/Reblend.construct("header", {
+    className: "App-header"
+  }, /*#__PURE__*/Reblend.construct("img", {
+    src: logo,
+    className: "App-logo",
+    alt: "logo"
+  }), /*#__PURE__*/Reblend.construct("p", null, "Edit ", /*#__PURE__*/Reblend.construct("code", null, "src/App.js"), " and save to reload. ", state), /*#__PURE__*/Reblend.construct("a", {
+    className: "App-link",
+    href: "https://reblendjs.org",
+    target: "_blank",
+    rel: "noopener noreferrer"
+  }, "Learn Reblend"))));
 }
-var _default = exports.default = App;
+export default App;

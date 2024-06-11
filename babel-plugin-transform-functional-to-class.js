@@ -1,6 +1,28 @@
 module.exports = function ({ types: t }) {
   return {
     visitor: {
+      Program(path) {
+        // Ensure that Reblend import statement is present
+        const reblendImport = t.importDeclaration(
+          [t.importDefaultSpecifier(t.identifier("Reblend"))],
+          t.stringLiteral("reblendjs")
+        );
+
+        let hasReblendImport = false;
+
+        path.traverse({
+          ImportDeclaration(importPath) {
+            if (importPath.node.source.value === "reblendjs") {
+              hasReblendImport = true;
+            }
+          },
+        });
+
+        if (!hasReblendImport) {
+          path.node.body.unshift(reblendImport);
+        }
+      },
+
       FunctionDeclaration(path) {
         const { node } = path;
 
@@ -16,11 +38,6 @@ module.exports = function ({ types: t }) {
         });
 
         if (containsJSX) {
-          // Check if the binding already exists in the current scope
-          if (path.scope.hasBinding(node.id.name, true)) {
-            path.scope.removeBinding(node.id.name);
-          }
-
           // Extract the body statements from the function
           const bodyStatements = node.body.body;
 
@@ -58,16 +75,19 @@ module.exports = function ({ types: t }) {
           // Create the class declaration
           const classDecl = t.classDeclaration(
             t.identifier(node.id.name),
-            null, // No superclass
+            t.identifier("Reblend"), // Extend Reblend directly
             t.classBody([constructorMethod, renderMethod]),
             []
           );
+
+          // Remove the original function binding from the scope
+          path.scope.removeBinding(node.id.name);
 
           // Replace the function declaration with the class declaration
           path.replaceWith(classDecl);
 
           // Stop further traversal
-          path.stop();
+          //path.stop();
         }
       },
     },

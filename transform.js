@@ -10,7 +10,7 @@ const inputCode = fs.readFileSync(inputFilePath, "utf8");
 const outputCode = babel.transform(inputCode, {
   filename: inputFilePath,
   presets: [
-    path.resolve("node_modules", "@babel/preset-env"),
+    //path.resolve("node_modules", "@babel/preset-env"),
     path.resolve("node_modules", "@babel/preset-typescript"),
     path.resolve("node_modules", "babel-preset-reblend"),
   ],
