@@ -14,7 +14,7 @@ const outputCode = babel.transform(inputCode, {
     path.resolve("node_modules", "@babel/preset-typescript"),
     path.resolve("node_modules", "babel-preset-reblend"),
   ],
-  plugins: [path.resolve("./babel-plugin-transform-functional-to-class")],
+  plugins: [path.resolve("./index")],
 }).code;
 
 fs.writeFileSync(outputFilePath, outputCode);
