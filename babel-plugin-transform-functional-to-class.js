@@ -1,5 +1,58 @@
+const addAssignmentStatements = (
+  t,
+  declarations,
+  declaredIdentifiers,
+  assignmentStatements
+) => {
+  declarations.forEach((declaration) => {
+    if (t.isIdentifier(declaration.id)) {
+      declaredIdentifiers.add(declaration.id.name);
+      assignmentStatements.push(
+        t.expressionStatement(
+          t.assignmentExpression(
+            "=",
+            t.memberExpression(t.thisExpression(), declaration.id),
+            declaration.id
+          )
+        )
+      );
+    } else if (t.isArrayPattern(declaration.id)) {
+      // Extract the variables declared in the ArrayPattern
+      declaration.id.elements.forEach((element) => {
+        if (t.isIdentifier(element)) {
+          declaredIdentifiers.add(element.name);
+          assignmentStatements.push(
+            t.expressionStatement(
+              t.assignmentExpression(
+                "=",
+                t.memberExpression(t.thisExpression(), element),
+                element
+              )
+            )
+          );
+        }
+      });
+    } else if (t.isObjectPattern(declaration.id)) {
+      // Extract the variables declared in the ObjectPattern
+      declaration.id.properties.forEach((property) => {
+        if (t.isObjectProperty(property) && t.isIdentifier(property.value)) {
+          declaredIdentifiers.add(property.value.name);
+          assignmentStatements.push(
+            t.expressionStatement(
+              t.assignmentExpression(
+                "=",
+                t.memberExpression(t.thisExpression(), property.value),
+                property.value
+              )
+            )
+          );
+        }
+      });
+    }
+  });
+};
+
 const processFunction = (path, node, t) => {
-  // Check if the function contains a JSXElement or JSXFragment return statement
   let containsJSX = false;
 
   path.traverse({
@@ -14,7 +67,6 @@ const processFunction = (path, node, t) => {
     },
   });
 
-  // Check if the function has already been transformed to a class
   let containSkipComment = false;
   const comments = path.node.innerComments;
   if (comments && comments.length > 0) {
@@ -28,10 +80,8 @@ const processFunction = (path, node, t) => {
   if (containsJSX && !containSkipComment && node.type !== "ClassMethod") {
     path.addComment("inner", " Transformed from function to class ", false);
 
-    // Extract the body statements from the function
     const bodyStatements = node.body.body;
 
-    // Separate the constructor statements and the render return statement
     const constructorStatements = [];
     let renderReturnStatement;
 
@@ -43,42 +93,17 @@ const processFunction = (path, node, t) => {
       }
     });
 
-    // Collect all variable identifiers from the constructor statements
     const declaredIdentifiers = new Set();
     const assignmentStatements = [];
 
     constructorStatements.forEach((statement) => {
       if (t.isVariableDeclaration(statement)) {
-        statement.declarations.forEach((declaration) => {
-          if (t.isIdentifier(declaration.id)) {
-            declaredIdentifiers.add(declaration.id.name);
-            assignmentStatements.push(
-              t.expressionStatement(
-                t.assignmentExpression(
-                  "=",
-                  t.memberExpression(t.thisExpression(), declaration.id),
-                  declaration.id
-                )
-              )
-            );
-          } else if (t.isArrayPattern(declaration.id)) {
-            // Extract the variables declared in the ArrayPattern
-            declaration.id.elements.forEach((element) => {
-              if (t.isIdentifier(element)) {
-                declaredIdentifiers.add(element.name);
-                assignmentStatements.push(
-                  t.expressionStatement(
-                    t.assignmentExpression(
-                      "=",
-                      t.memberExpression(t.thisExpression(), element),
-                      element
-                    )
-                  )
-                );
-              }
-            });
-          }
-        });
+        addAssignmentStatements(
+          t,
+          statement.declarations,
+          declaredIdentifiers,
+          assignmentStatements
+        );
       } else if (t.isFunctionDeclaration(statement)) {
         declaredIdentifiers.add(statement.id.name);
         assignmentStatements.push(
@@ -93,7 +118,6 @@ const processFunction = (path, node, t) => {
       }
     });
 
-    // Create the class constructor method
     const constructorMethod = t.classMethod(
       "constructor",
       t.identifier("constructor"),
@@ -105,53 +129,79 @@ const processFunction = (path, node, t) => {
       ])
     );
 
-    // Create the html method (formerly render method)
     const renderMethod = t.classMethod(
       "method",
       t.identifier("html"),
-      [], // Empty parameter list for html method
-      t.blockStatement([renderReturnStatement]) // The return statement from the original function
+      [],
+      t.blockStatement([renderReturnStatement])
     );
 
-    // Replace identifiers in renderReturnStatement with `this.identifier`
+    const argIdentifiers =
+      node.params.length < 1
+        ? []
+        : t.isObjectPattern(node.params[0])
+        ? node.params[0].properties
+        : [node.params[0]];
+
     const replaceIdentifiers = {
       Identifier(p) {
-        const hasId = assignmentStatements.find(
+        const hasThisId = assignmentStatements.find(
           (assignment) =>
             assignment.expression.left.property.name === p.node.name
         );
-        if (!t.isMemberExpression(p.parent) && hasId) {
+        const hasPropId = argIdentifiers.find((ident) =>
+          t.isObjectProperty(ident)
+            ? ident.value.name === p.node.name
+            : ident.name === p.node.name
+        );
+        if (
+          !t.isThisExpression(p.parent.object) &&
+          !t.isThisExpression(p.parent.object?.object) &&
+          hasThisId
+        ) {
           p.replaceWith(
             t.memberExpression(t.thisExpression(), t.identifier(p.node.name))
           );
+        } else if (
+          !t.isThisExpression(p.parent.object) &&
+          !t.isThisExpression(p.parent.object?.object) &&
+          hasPropId
+        ) {
+          if (t.isObjectProperty(hasPropId)) {
+            p.replaceWith(
+              t.memberExpression(
+                t.memberExpression(t.thisExpression(), t.identifier("props")),
+                t.identifier(p.node.name)
+              )
+            );
+          } else {
+            p.replaceWith(
+              t.memberExpression(t.thisExpression(), t.identifier(p.node.name))
+            );
+          }
         }
       },
     };
 
-    // Traverse only within the scope of the renderReturnStatement node
     path.scope.traverse(renderReturnStatement, replaceIdentifiers);
 
-    // Create the class declaration
     const classBody = [constructorMethod, renderMethod];
     const classDecl = t.classDeclaration(
       node.id ? t.identifier(node.id.name) : null,
-      t.identifier("Reblend"), // Extend Reblend directly
+      t.identifier("Reblend"),
       t.classBody(classBody),
       []
     );
 
-    // Convert the class declaration to a class expression
     const classExpr = t.classExpression(
       node.id ? t.identifier(node.id.name) : null,
-      t.identifier("Reblend"), // Extend Reblend directly
+      t.identifier("Reblend"),
       t.classBody(classBody),
       []
     );
 
-    // Remove the original function binding from the scope
     node.id?.name && path.scope.removeBinding(node.id?.name);
 
-    // Replace the arrow function or function declaration with the class
     if (t.isExpression(path)) {
       const fne = t.arrowFunctionExpression(
         [],
@@ -169,7 +219,6 @@ module.exports = function ({ types: t }) {
   return {
     visitor: {
       Program(path) {
-        // Ensure that Reblend import statement is present
         const reblendImport = t.importDeclaration(
           [t.importDefaultSpecifier(t.identifier("Reblend"))],
           t.stringLiteral("reblendjs")

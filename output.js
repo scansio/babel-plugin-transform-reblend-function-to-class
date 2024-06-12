@@ -1,25 +1,45 @@
-import Reblend from "reblendjs";
-import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { increment } from "./actions";
-const SampleComponent = ((
-  /* Transformed from function to class */
-) => {
-  return class extends Reblend {
-    constructor() {
-      super();
-      const count = useSelector(state => state.counter);
-      const dispatch = useDispatch();
-      this.count = count;
-      this.dispatch = dispatch;
+import logo from "./logo.svg";
+import "./App.css";
+import Reblend, { useState } from "reblendjs";
+class App extends Reblend {
+  constructor() {
+    super();
+    const [state, setState] = useState(0);
+    setInterval(() => {
+      setState(state + 1);
+    }, 1000);
+    function ts() {
+      console.log(this);
     }
-    html() {
-      return /*#__PURE__*/Reblend.construct("div", null, /*#__PURE__*/Reblend.construct("p", null, "Count: ", this.count), /*#__PURE__*/Reblend.construct("button", {
-        onClick: () => this.dispatch(increment())
-      }, "Increment"), /*#__PURE__*/Reblend.construct("p", null, "Hello, ", name, "!"));
+    async function ats() {
+      console.log(this);
     }
-  };
-})(
-  /* Transformed from function to class */
-);
-export default SampleComponent;
+    const tss = () => console.log(this);
+    const atss = async () => console.log(this);
+    this.state = state;
+    this.setState = setState;
+    this.ts = ts;
+    this.ats = ats;
+    this.tss = tss;
+    this.atss = atss;
+  }
+  html() {
+    return /*#__PURE__*/Reblend.construct(Reblend, null, /*#__PURE__*/Reblend.construct("div", {
+      className: "App"
+    }, /*#__PURE__*/Reblend.construct("header", {
+      className: "App-header"
+    }, /*#__PURE__*/Reblend.construct("img", {
+      src: logo,
+      className: "App-logo",
+      alt: "logo"
+    }), /*#__PURE__*/Reblend.construct("p", null, "Edit ", /*#__PURE__*/Reblend.construct("code", null, "src/App.js"), " and save to reload. ", this.state), /*#__PURE__*/Reblend.construct("a", {
+      onClick: this.atss,
+      className: "App-link",
+      href: "https://reblendjs.org",
+      target: "_blank",
+      rel: "noopener noreferrer"
+    }, "Learn Reblend"))));
+  }
+}
+/* Transformed from function to class */
+export default App;

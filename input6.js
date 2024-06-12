@@ -2,15 +2,17 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { increment } from "./actions";
 
-const SampleComponent = ({ name }) => {
+const SampleComponent = ({ user }) => {
   const count = useSelector((state) => state.counter);
   const dispatch = useDispatch();
 
   return (
     <div>
-      <p>Count: {count}</p>
+      <p>Count: {count.number.insert()}</p>
       <button onClick={() => dispatch(increment())}>Increment</button>
-      <p>Hello, {name}!</p>
+      <p>
+        Hello, {user.names.first} {user.lastname}!
+      </p>
     </div>
   );
 };
