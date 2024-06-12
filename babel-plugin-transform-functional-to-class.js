@@ -114,24 +114,22 @@ const processFunction = (path, node, t) => {
     );
 
     // Replace identifiers in renderReturnStatement with `this.identifier`
-    if (renderReturnStatement) {
-      const replaceIdentifiers = {
-        Identifier(p) {
-          const hasId = assignmentStatements.find(
-            (assignment) =>
-              assignment.expression.left.property.name === p.node.name
+    const replaceIdentifiers = {
+      Identifier(p) {
+        const hasId = assignmentStatements.find(
+          (assignment) =>
+            assignment.expression.left.property.name === p.node.name
+        );
+        if (!t.isMemberExpression(p.parent) && hasId) {
+          p.replaceWith(
+            t.memberExpression(t.thisExpression(), t.identifier(p.node.name))
           );
-          if (p.parent.type === "JSXExpressionContainer" && hasId) {
-            p.replaceWith(
-              t.memberExpression(t.thisExpression(), t.identifier(p.node.name))
-            );
-          }
-        },
-      };
+        }
+      },
+    };
 
-      // Traverse only within the scope of the renderReturnStatement node
-      path.traverse(replaceIdentifiers, renderMethod);
-    }
+    // Traverse only within the scope of the renderReturnStatement node
+    path.scope.traverse(renderReturnStatement, replaceIdentifiers);
 
     // Create the class declaration
     const classBody = [constructorMethod, renderMethod];
@@ -164,7 +162,6 @@ const processFunction = (path, node, t) => {
     } else {
       path.replaceWith(classDecl);
     }
-    //path.skip();
   }
 };
 
@@ -196,26 +193,7 @@ module.exports = function ({ types: t }) {
       Function(path) {
         const { node } = path;
         processFunction(path, node, t);
-      } /* 
-
-      ArrowFunctionExpression(path) {
-        const { node } = path;
-        processFunction(path, node, t);
       },
-
-      FunctionExpression(path) {
-        const { node } = path;
-        processFunction(path, node, t);
-      },
-
-      VariableDeclaration(path) {
-        const { node } = path;
-        node.declarations.forEach((declaration) => {
-          if (t.isFunctionExpression(declaration.init) && declaration.init.id) {
-            processFunction(path, declaration.init, t);
-          }
-        });
-      }, */,
     },
   };
 };
