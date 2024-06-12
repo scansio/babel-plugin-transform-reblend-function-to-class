@@ -25,7 +25,7 @@ const processFunction = (path, node, t) => {
     });
   }
 
-  if (containsJSX && !containSkipComment) {
+  if (containsJSX && !containSkipComment && node.type !== "ClassMethod") {
     path.addComment("inner", " Transformed from function to class ", false);
 
     // Extract the body statements from the function
@@ -151,16 +151,16 @@ const processFunction = (path, node, t) => {
     );
 
     // Remove the original function binding from the scope
-    path.scope.removeBinding(node.id?.name);
+    node.id?.name && path.scope.removeBinding(node.id?.name);
 
     // Replace the arrow function or function declaration with the class
-    if (t.isArrowFunctionExpression(path.node)) {
-      path.replaceWith(
-        t.arrowFunctionExpression(
-          [],
-          t.blockStatement([t.returnStatement(classExpr)])
-        )
+    if (t.isExpression(path)) {
+      const fne = t.arrowFunctionExpression(
+        [],
+        t.blockStatement([t.returnStatement(classExpr)])
       );
+      t.addComment(fne, "inner", " Transformed from function to class ", false);
+      path.replaceWith(t.callExpression(fne, []));
     } else {
       path.replaceWith(classDecl);
     }
@@ -193,15 +193,29 @@ module.exports = function ({ types: t }) {
         }
       },
 
-      FunctionDeclaration(path) {
+      Function(path) {
         const { node } = path;
         processFunction(path, node, t);
-      },
+      } /* 
 
       ArrowFunctionExpression(path) {
         const { node } = path;
         processFunction(path, node, t);
       },
+
+      FunctionExpression(path) {
+        const { node } = path;
+        processFunction(path, node, t);
+      },
+
+      VariableDeclaration(path) {
+        const { node } = path;
+        node.declarations.forEach((declaration) => {
+          if (t.isFunctionExpression(declaration.init) && declaration.init.id) {
+            processFunction(path, declaration.init, t);
+          }
+        });
+      }, */,
     },
   };
 };

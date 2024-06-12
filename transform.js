@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const babel = require("@babel/core");
 
-const inputFilePath = path.join(__dirname, "input.js");
+const inputFilePath = path.join(__dirname, "input1.js");
 const outputFilePath = path.join(__dirname, "output.js");
 
 const inputCode = fs.readFileSync(inputFilePath, "utf8");
