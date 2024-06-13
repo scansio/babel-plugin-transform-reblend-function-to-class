@@ -10,15 +10,15 @@ function App() {
   }, 1000);
 
   function ts() {
-    console.log(this);
+    console.log("this");
   }
 
   async function ats() {
-    console.log(this);
+    console.log("this");
   }
 
-  const tss = () => console.log(this);
-  const atss = async () => console.log(this);
+  const tss = () => console.log("this");
+  const atss = async () => console.log("this");
 
   return (
     <>

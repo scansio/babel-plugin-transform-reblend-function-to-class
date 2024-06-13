@@ -1,2 +1,5 @@
-src/test
-.babelrc
+src
+babel.config.js
+jest.config.ts
+tsconfig.json
+lib/test

@@ -242,27 +242,6 @@ export default function ({
 }): { visitor: Visitor } {
   return {
     visitor: {
-      Program(path: NodePath<t.Program>) {
-        const reblendImport = t.importDeclaration(
-          [t.importDefaultSpecifier(t.identifier("Reblend"))],
-          t.stringLiteral("reblendjs")
-        );
-
-        let hasReblendImport = false;
-
-        path.traverse({
-          ImportDeclaration(importPath) {
-            if (importPath.node.source.value === "reblendjs") {
-              hasReblendImport = true;
-            }
-          },
-        });
-
-        if (!hasReblendImport) {
-          path.node.body.unshift(reblendImport);
-        }
-      },
-
       Function(path: NodePath<t.Function>) {
         const { node } = path;
         processFunction(path, node, t);

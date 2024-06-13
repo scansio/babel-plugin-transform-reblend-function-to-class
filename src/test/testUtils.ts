@@ -7,17 +7,22 @@ interface TransformResult {
   expectedOutputCode: string;
 }
 
-function run(dir: string, writeOutFile = false): TransformResult {
-  const inputFilePath = path.resolve(dir, "input.ts");
-  const outputFilePath = path.resolve(dir, "output.js");
+export function run(dir: string, writeOutFile = false): TransformResult {
+  const inputFilePath = path.resolve(dir, "input.js").replace("/lib/", "/src/");
+  const outputFilePath = path
+    .resolve(dir, "output.js")
+    .replace("/lib/", "/src/");
 
   // Read the input code
   const inputCode = fs.readFileSync(inputFilePath, "utf8");
 
   // Use Babel to transform the code (assuming it's needed)
-  const outputCode = transformSync(inputCode, {
+
+  const config = {
     filename: inputFilePath,
-  })!.code; // Non-null assertion for transformed code
+  };
+
+  const outputCode = transformSync(inputCode, config)!.code;
 
   const write = () => fs.writeFileSync(outputFilePath, `${outputCode}`);
   let writing: boolean = false;
@@ -45,7 +50,7 @@ function run(dir: string, writeOutFile = false): TransformResult {
   };
 }
 
-function generateOutputFiles(filepath = __dirname): void {
+export function generateOutputFiles(filepath = ""): void {
   if (
     !filepath ||
     !fs.existsSync(filepath) ||
@@ -53,7 +58,7 @@ function generateOutputFiles(filepath = __dirname): void {
   ) {
     return;
   }
-  if (fs.existsSync(path.resolve(filepath, "input.ts"))) {
+  if (fs.existsSync(path.resolve(filepath, "input.js"))) {
     run(filepath, true);
   }
   for (const dir of fs.readdirSync(filepath)) {
@@ -61,5 +66,3 @@ function generateOutputFiles(filepath = __dirname): void {
     generateOutputFiles(fullDir);
   }
 }
-
-export { run, generateOutputFiles };
