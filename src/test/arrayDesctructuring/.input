@@ -9,6 +9,10 @@ function App() {
     setState(state + 1);
   }, 1000);
 
+  /**
+   * Declarations
+   */
+  
   function ts() {
     console.log(this);
   }
@@ -18,6 +22,7 @@ function App() {
   }
 
   const tss = () => console.log(this);
+ 
   const atss = async () => console.log(this);
 
   return (

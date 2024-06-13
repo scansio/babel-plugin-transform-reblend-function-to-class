@@ -1,21 +1,24 @@
 {
-  "name": "babel-plugin-transform-functional-to-class",
+  "name": "babel-plugin-transform-reblend-function-to-class",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "generate_test_output": "node ./src/test/generateOutputs.js",
+    "test": "mocha"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "@babel/core": "^7.24.7",
-    "@babel/plugin-syntax-jsx": "^7.24.7",
-    "@babel/preset-env": "^7.24.7",
-    "@babel/preset-typescript": "^7.24.7",
+  "keywords": [
+    "babel",
+    "plugin",
+    "reblend",
+    "reblendFunction2Class"
+  ],
+  "author": "Emmanuel Elom <scansioquielom@gmail.com>",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
     "babel-preset-reblend": "^7.24.22",
-    "reblendjs": "^2.0.4",
-    "typescript": "^5.4.5"
+    "chai": "^5.1.1",
+    "mocha": "^10.4.0"
   }
 }
