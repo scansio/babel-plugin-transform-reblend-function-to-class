@@ -1,4 +1,3 @@
 {
-  "presets": ["babel-preset-reblend"],
   "plugins": ["./src/index"]
 }
