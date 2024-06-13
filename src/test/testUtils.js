@@ -3,8 +3,8 @@ const fs = require("fs");
 const babel = require("@babel/core"); // Assuming you're using Babel
 
 function run(dir, writeOutFile = false) {
-  const inputFilePath = path.resolve(dir, "input.js");
-  const outputFilePath = path.resolve(dir, "output.js");
+  const inputFilePath = path.resolve(dir, ".input");
+  const outputFilePath = path.resolve(dir, ".output");
 
   // Read the input code
   const inputCode = fs.readFileSync(inputFilePath, "utf8");
@@ -42,7 +42,7 @@ function run(dir, writeOutFile = false) {
 
 function generateOutputFiles(filepath = __dirname) {
   if (!filepath || !fs.statSync(filepath).isDirectory()) return;
-  if (fs.existsSync(path.resolve(filepath, "input.js"))) {
+  if (fs.existsSync(path.resolve(filepath, ".input"))) {
     run(filepath, true);
   }
   for (const dir of fs.readdirSync(filepath)) {

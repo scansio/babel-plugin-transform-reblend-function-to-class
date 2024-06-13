@@ -5,7 +5,7 @@
   "main": "./src/index.js",
   "scripts": {
     "generate_test_output": "node ./src/test/generateOutputs.js",
-    "test": "mocha"
+    "test": "jest"
   },
   "keywords": [
     "babel",
@@ -17,8 +17,8 @@
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
+    "@babel/core": "^7.24.7",
     "babel-preset-reblend": "^7.24.22",
-    "chai": "^5.1.1",
-    "mocha": "^10.4.0"
+    "jest": "^29.7.0"
   }
 }
