@@ -20,6 +20,7 @@ export function run(dir: string, writeOutFile = false): TransformResult {
 
   const config = {
     filename: inputFilePath,
+    plugins: [require.resolve("../index")],
   };
 
   const outputCode = transformSync(inputCode, config)!.code;

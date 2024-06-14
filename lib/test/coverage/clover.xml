@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1718340706612" clover="3.2.0">
+  <project timestamp="1718340706612" name="All files">
+    <metrics statements="102" coveredstatements="90" conditionals="85" coveredconditionals="72" methods="17" coveredmethods="15" elements="204" coveredelements="177" complexity="0" loc="102" ncloc="102" packages="3" files="3" classes="3"/>
+    <package name="babel-plugin-transform-reblend-function-to-class">
+      <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="babel.config.js" path="/home/s/Desktop/proj/scyberLink/babel-plugin-transform-reblend-function-to-class/babel.config.js">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="12" type="stmt"/>
+      </file>
+    </package>
+    <package name="babel-plugin-transform-reblend-function-to-class.src">
+      <metrics statements="72" coveredstatements="72" conditionals="71" coveredconditionals="69" methods="14" coveredmethods="14"/>
+      <file name="index.ts" path="/home/s/Desktop/proj/scyberLink/babel-plugin-transform-reblend-function-to-class/src/index.ts">
+        <metrics statements="72" coveredstatements="72" conditionals="71" coveredconditionals="69" methods="14" coveredmethods="14"/>
+        <line num="13" count="12" type="stmt"/>
+        <line num="19" count="22" type="stmt"/>
+        <line num="20" count="22" type="cond" truecount="2" falsecount="0"/>
+        <line num="21" count="11" type="stmt"/>
+        <line num="22" count="11" type="stmt"/>
+        <line num="31" count="11" type="cond" truecount="2" falsecount="0"/>
+        <line num="33" count="9" type="stmt"/>
+        <line num="34" count="18" type="cond" truecount="1" falsecount="0"/>
+        <line num="35" count="18" type="stmt"/>
+        <line num="36" count="18" type="stmt"/>
+        <line num="47" count="2" type="cond" truecount="1" falsecount="0"/>
+        <line num="49" count="2" type="stmt"/>
+        <line num="50" count="4" type="cond" truecount="3" falsecount="0"/>
+        <line num="51" count="4" type="stmt"/>
+        <line num="52" count="4" type="stmt"/>
+        <line num="67" count="12" type="stmt"/>
+        <line num="68" count="67" type="stmt"/>
+        <line num="70" count="67" type="stmt"/>
+        <line num="72" count="42" type="cond" truecount="1" falsecount="0"/>
+        <line num="77" count="31" type="stmt"/>
+        <line num="82" count="67" type="stmt"/>
+        <line num="83" count="67" type="stmt"/>
+        <line num="84" count="67" type="cond" truecount="3" falsecount="0"/>
+        <line num="85" count="7" type="stmt"/>
+        <line num="86" count="7" type="cond" truecount="1" falsecount="0"/>
+        <line num="87" count="7" type="stmt"/>
+        <line num="92" count="67" type="cond" truecount="4" falsecount="0"/>
+        <line num="93" count="12" type="stmt"/>
+        <line num="95" count="12" type="stmt"/>
+        <line num="97" count="12" type="stmt"/>
+        <line num="100" count="12" type="stmt"/>
+        <line num="101" count="42" type="cond" truecount="2" falsecount="0"/>
+        <line num="102" count="12" type="stmt"/>
+        <line num="104" count="30" type="stmt"/>
+        <line num="108" count="12" type="stmt"/>
+        <line num="109" count="12" type="stmt"/>
+        <line num="111" count="12" type="stmt"/>
+        <line num="112" count="30" type="cond" truecount="2" falsecount="0"/>
+        <line num="113" count="22" type="stmt"/>
+        <line num="119" count="8" type="cond" truecount="1" falsecount="0"/>
+        <line num="120" count="4" type="cond" truecount="3" falsecount="1"/>
+        <line num="121" count="4" type="stmt"/>
+        <line num="133" count="12" type="stmt"/>
+        <line num="144" count="12" type="stmt"/>
+        <line num="152" count="12" type="cond" truecount="2" falsecount="0"/>
+        <line num="158" count="12" type="stmt"/>
+        <line num="160" count="83" type="stmt"/>
+        <line num="161" count="191" type="stmt"/>
+        <line num="162" count="191" type="stmt"/>
+        <line num="168" count="83" type="stmt"/>
+        <line num="169" count="70" type="cond" truecount="2" falsecount="0"/>
+        <line num="173" count="83" type="cond" truecount="1" falsecount="0"/>
+        <line num="177" count="40" type="cond" truecount="2" falsecount="0"/>
+        <line num="178" count="22" type="stmt"/>
+        <line num="181" count="18" type="cond" truecount="1" falsecount="0"/>
+        <line num="182" count="10" type="cond" truecount="2" falsecount="0"/>
+        <line num="183" count="4" type="stmt"/>
+        <line num="190" count="6" type="stmt"/>
+        <line num="202" count="12" type="stmt"/>
+        <line num="204" count="12" type="stmt"/>
+        <line num="205" count="12" type="stmt"/>
+        <line num="213" count="12" type="stmt"/>
+        <line num="222" count="12" type="cond" truecount="9" falsecount="1"/>
+        <line num="225" count="12" type="cond" truecount="2" falsecount="0"/>
+        <line num="226" count="7" type="stmt"/>
+        <line num="230" count="7" type="stmt"/>
+        <line num="231" count="7" type="stmt"/>
+        <line num="233" count="5" type="stmt"/>
+        <line num="238" count="12" type="stmt"/>
+        <line num="243" count="12" type="stmt"/>
+        <line num="246" count="67" type="stmt"/>
+        <line num="247" count="67" type="stmt"/>
+      </file>
+    </package>
+    <package name="babel-plugin-transform-reblend-function-to-class.src.test">
+      <metrics statements="29" coveredstatements="17" conditionals="14" coveredconditionals="3" methods="3" coveredmethods="1"/>
+      <file name="testUtils.ts" path="/home/s/Desktop/proj/scyberLink/babel-plugin-transform-reblend-function-to-class/src/test/testUtils.ts">
+        <metrics statements="29" coveredstatements="17" conditionals="14" coveredconditionals="3" methods="3" coveredmethods="1"/>
+        <line num="1" count="12" type="stmt"/>
+        <line num="2" count="12" type="stmt"/>
+        <line num="3" count="12" type="stmt"/>
+        <line num="10" count="12" type="cond" truecount="1" falsecount="0"/>
+        <line num="11" count="12" type="stmt"/>
+        <line num="12" count="12" type="stmt"/>
+        <line num="17" count="12" type="stmt"/>
+        <line num="21" count="12" type="stmt"/>
+        <line num="26" count="12" type="stmt"/>
+        <line num="28" count="12" type="stmt"/>
+        <line num="29" count="12" type="stmt"/>
+        <line num="30" count="12" type="stmt"/>
+        <line num="31" count="12" type="stmt"/>
+        <line num="33" count="12" type="stmt"/>
+        <line num="35" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="36" count="0" type="stmt"/>
+        <line num="37" count="0" type="stmt"/>
+        <line num="38" count="0" type="stmt"/>
+        <line num="42" count="0" type="stmt"/>
+        <line num="46" count="12" type="cond" truecount="1" falsecount="2"/>
+        <line num="48" count="12" type="stmt"/>
+        <line num="54" count="12" type="cond" truecount="0" falsecount="1"/>
+        <line num="55" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="60" count="0" type="stmt"/>
+        <line num="62" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="63" count="0" type="stmt"/>
+        <line num="65" count="0" type="stmt"/>
+        <line num="66" count="0" type="stmt"/>
+        <line num="67" count="0" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>
