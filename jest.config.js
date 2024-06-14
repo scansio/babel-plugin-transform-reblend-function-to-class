@@ -30,7 +30,6 @@ const config = {
   testEnvironment: "node",
   rootDir: "./lib/test",
   testMatch: [
-    //   "**/__tests__/**/*.[jt]s?(x)",
     "**/?(*.)+(spec|test).[tj]s?(x)",
   ],
   // An array of regexp pattern strings used to skip coverage collection
