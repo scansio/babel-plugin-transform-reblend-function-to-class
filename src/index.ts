@@ -243,8 +243,20 @@ export default function ({
   return {
     visitor: {
       Function(path: NodePath<t.Function>) {
-        const { node } = path;
-        processFunction(path, node, t);
+        let hasReblendImport = false;
+
+        path.traverse({
+          ImportDeclaration(importPath) {
+            if (importPath.node.source.value === "reblendjs") {
+              hasReblendImport = true;
+            }
+          },
+        });
+
+        if (hasReblendImport) {
+          const { node } = path;
+          processFunction(path, node, t);
+        }
       },
     },
   };
