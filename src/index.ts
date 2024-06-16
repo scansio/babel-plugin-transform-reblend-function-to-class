@@ -199,7 +199,23 @@ const processFunction: ProcessFunction = (path, node, t) => {
       },
     };
 
+    const hookBinding = {
+      CallExpression(p: NodePath<t.CallExpression>) {
+        if (
+          t.isIdentifier(p.node.callee) &&
+          p.node.callee.name.startsWith("use")
+        ) {
+          const bindCall = t.callExpression(
+            t.memberExpression(p.node.callee, t.identifier("bind")),
+            [t.thisExpression()]
+          );
+          p.replaceWith(t.callExpression(bindCall, p.node.arguments));
+        }
+      },
+    };
+
     path.scope.traverse(renderReturnStatement!, replaceIdentifiers);
+    path.scope.traverse(constructorMethod!, hookBinding);
 
     const classBody = [constructorMethod, renderMethod];
     const classDecl = t.classDeclaration(
@@ -242,7 +258,7 @@ export default function ({
 }): { visitor: Visitor } {
   return {
     visitor: {
-      Function(path: NodePath<t.Function>) {
+      Program(path: NodePath<t.Program>) {
         let hasReblendImport = false;
 
         path.traverse({
@@ -254,8 +270,12 @@ export default function ({
         });
 
         if (hasReblendImport) {
-          const { node } = path;
-          processFunction(path, node, t);
+          path.traverse({
+            Function(functionPath) {
+              const { node } = functionPath;
+              processFunction(functionPath, node, t);
+            },
+          });
         }
       },
     },

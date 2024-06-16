@@ -1,5 +1,4 @@
 import Reblend from "reblendjs";
-import React from 'react';
 import useCounter from './useCounter';
 const SampleComponent = ((
   /* Transformed from function to class */
@@ -10,14 +9,16 @@ const SampleComponent = ((
       const {
         count,
         increment
-      } = useCounter();
+      } = useCounter.bind(this)();
       this.count = count;
       this.increment = increment;
     }
     html() {
-      return /*#__PURE__*/Reblend.construct("div", null, /*#__PURE__*/Reblend.construct("p", null, "Count: ", this.count), /*#__PURE__*/Reblend.construct("button", {
-        onClick: this.increment
-      }, "Increment"), /*#__PURE__*/Reblend.construct("p", null, "Hello, ", this.props.name, "!"));
+      return <div>
+      <p>Count: {this.count}</p>
+      <button onClick={this.increment}>Increment</button>
+      <p>Hello, {this.props.name}!</p>
+    </div>;
     }
   };
 })(

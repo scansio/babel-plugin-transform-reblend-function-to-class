@@ -1,3 +1,3 @@
 module.exports = {
-  presets: ["babel-preset-reblend"],
+  plugins: ["@babel/plugin-syntax-jsx"],
 };

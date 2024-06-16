@@ -1,4 +1,4 @@
-import React from 'react';
+import Reblend from "reblendjs";
 import useCounter from './useCounter';
 
 const SampleComponent = function (props) {

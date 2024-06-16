@@ -1,21 +1,13 @@
-import Reblend from "reblendjs";
 import React, { useState } from 'react';
-class SampleComponent extends Reblend {
-  init() {
-    super();
-    const [count, setCount] = useState(0);
-    const handleClick = () => {
-      setCount(count + 1);
-    };
-    this.count = count;
-    this.setCount = setCount;
-    this.handleClick = handleClick;
-  }
-  html() {
-    return /*#__PURE__*/Reblend.construct("div", null, /*#__PURE__*/Reblend.construct("p", null, "Count: ", this.count), /*#__PURE__*/Reblend.construct("button", {
-      onClick: this.handleClick
-    }, "Increment"), /*#__PURE__*/Reblend.construct("p", null, "Hello, ", this.props.name, "!"));
-  }
+function SampleComponent(props) {
+  const [count, setCount] = useState(0);
+  const handleClick = () => {
+    setCount(count + 1);
+  };
+  return <div>
+      <p>Count: {count}</p>
+      <button onClick={handleClick}>Increment</button>
+      <p>Hello, {props.name}!</p>
+    </div>;
 }
-/* Transformed from function to class */
 export default SampleComponent;
