@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import Reblend, { useState } from "reblendjs";
 
 const SampleComponent = ({ name }) => {
   const [count, setCount] = useState(0);

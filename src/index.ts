@@ -209,7 +209,35 @@ const processFunction: ProcessFunction = (path, node, t) => {
             t.memberExpression(p.node.callee, t.identifier("bind")),
             [t.thisExpression()]
           );
-          p.replaceWith(t.callExpression(bindCall, p.node.arguments));
+
+          const newCallExpression = t.callExpression(
+            bindCall,
+            p.node.arguments
+          );
+
+          if (
+            t.isVariableDeclarator(p.parent) &&
+            p.node.callee.name.startsWith("useState")
+          ) {
+            const variableName = (p.parent.id as t.ArrayPattern)
+              .elements[1] as t.Identifier;
+            const stateName = (p.parent.id as t.ArrayPattern)
+              .elements[0] as t.Identifier;
+            const applyStatement = t.expressionStatement(
+              t.callExpression(
+                t.memberExpression(t.thisExpression(), t.identifier("apply")),
+                [variableName, t.stringLiteral(stateName.name)]
+              )
+            );
+            const parentPath = p.findParent((path) =>
+              path.isVariableDeclaration()
+            ) as NodePath<t.VariableDeclaration>;
+            if (parentPath) {
+              parentPath.insertAfter(applyStatement);
+            }
+          }
+
+          p.replaceWith(newCallExpression);
         }
       },
     };

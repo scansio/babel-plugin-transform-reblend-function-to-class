@@ -5,6 +5,7 @@ class App extends Reblend {
   init() {
     super();
     const [state, setState] = useState.bind(this)(0);
+    this.apply(setState, "state");
     setInterval(() => {
       setState(state + 1);
     }, 1000);
