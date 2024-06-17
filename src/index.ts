@@ -131,14 +131,17 @@ const processFunction: ProcessFunction = (path, node, t) => {
     });
 
     const constructorMethod = t.classMethod(
+      "constructor",
+      t.identifier("constructor"),
+      [],
+      t.blockStatement([t.expressionStatement(t.callExpression(t.super(), []))])
+    );
+
+    const initMethod = t.classMethod(
       "method",
       t.identifier("init"),
       [],
-      t.blockStatement([
-        t.expressionStatement(t.callExpression(t.super(), [])),
-        ...constructorStatements,
-        ...assignmentStatements,
-      ])
+      t.blockStatement([...constructorStatements, ...assignmentStatements])
     );
 
     const renderMethod = t.classMethod(
@@ -245,7 +248,7 @@ const processFunction: ProcessFunction = (path, node, t) => {
     path.scope.traverse(renderReturnStatement!, replaceIdentifiers);
     path.scope.traverse(constructorMethod!, hookBinding);
 
-    const classBody = [constructorMethod, renderMethod];
+    const classBody = [constructorMethod, initMethod, renderMethod];
     const classDecl = t.classDeclaration(
       //@ts-ignore
       node.id ? t.identifier(node.id.name) : null,
