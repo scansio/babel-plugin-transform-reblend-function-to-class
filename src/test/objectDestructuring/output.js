@@ -4,8 +4,10 @@ const SampleComponent = ((
   /* Transformed from function to class */
 ) => {
   return class extends Reblend {
-    init() {
+    constructor() {
       super();
+    }
+    init() {
       const {
         count,
         increment

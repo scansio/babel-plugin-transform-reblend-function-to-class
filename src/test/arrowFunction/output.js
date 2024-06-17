@@ -5,8 +5,10 @@ const App = ((
   /* Transformed from function to class */
 ) => {
   return class extends Reblend {
-    init() {
+    constructor() {
       super();
+    }
+    init() {
       const [state, setState] = useState.bind(this)(0);
       this.apply(setState, "state");
       setInterval(() => {

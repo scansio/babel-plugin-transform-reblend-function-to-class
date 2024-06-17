@@ -1,7 +1,9 @@
 import Reblend, { useState } from 'reblendjs';
 class SampleComponent extends Reblend {
-  init() {
+  constructor() {
     super();
+  }
+  init() {
     const [count, setCount] = useState.bind(this)(0);
     this.apply(setCount, "count");
     const handleClick = () => {

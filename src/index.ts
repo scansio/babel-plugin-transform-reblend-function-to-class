@@ -246,7 +246,7 @@ const processFunction: ProcessFunction = (path, node, t) => {
     };
 
     path.scope.traverse(renderReturnStatement!, replaceIdentifiers);
-    path.scope.traverse(constructorMethod!, hookBinding);
+    path.scope.traverse(initMethod!, hookBinding);
 
     const classBody = [constructorMethod, initMethod, renderMethod];
     const classDecl = t.classDeclaration(

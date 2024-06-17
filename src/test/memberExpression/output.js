@@ -3,8 +3,10 @@ const SampleComponent = ((
   /* Transformed from function to class */
 ) => {
   return class extends Reblend {
-    init() {
+    constructor() {
       super();
+    }
+    init() {
       const [count, setCount] = useState.bind(this)(0);
       this.apply(setCount, "count");
       const handleClick = () => {
