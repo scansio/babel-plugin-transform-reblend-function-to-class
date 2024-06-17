@@ -6,7 +6,8 @@
   "scripts": {
     "generate_test_output": "npm run pretest; node ./lib/test/generateOutputs.js",
     "test": "jest",
-    "pretest": "tsc"
+    "pretest": "tsc",
+    "prepublish": "npm run pretest"
   },
   "keywords": [
     "babel",
