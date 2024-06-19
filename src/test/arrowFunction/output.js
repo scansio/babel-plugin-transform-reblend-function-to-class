@@ -9,8 +9,8 @@ const App = ((
       super();
     }
     init() {
-      const [state, setState] = useState.bind(this)(0);
-      this.apply(setState, "state");
+      let [state, setState] = useState.bind(this)(0);
+      setState = this.apply(setState, "state");
       setInterval(() => {
         setState(state + 1);
       }, 1000);

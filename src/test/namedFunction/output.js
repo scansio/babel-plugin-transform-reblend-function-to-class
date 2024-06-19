@@ -7,8 +7,8 @@ const SampleComponent = ((
       super();
     }
     init() {
-      const [count, setCount] = useState.bind(this)(0);
-      this.apply(setCount, "count");
+      let [count, setCount] = useState.bind(this)(0);
+      setCount = this.apply(setCount, "count");
       useEffect.bind(this)(() => {
         const interval = setInterval(() => {
           setCount(prevCount => prevCount + 1);

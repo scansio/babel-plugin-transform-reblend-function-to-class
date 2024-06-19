@@ -227,15 +227,24 @@ const processFunction: ProcessFunction = (path, node, t) => {
             const stateName = (p.parent.id as t.ArrayPattern)
               .elements[0] as t.Identifier;
             const applyStatement = t.expressionStatement(
-              t.callExpression(
-                t.memberExpression(t.thisExpression(), t.identifier("apply")),
-                [variableName, t.stringLiteral(stateName.name)]
+              t.assignmentExpression(
+                "=",
+                variableName,
+                t.callExpression(
+                  t.memberExpression(t.thisExpression(), t.identifier("apply")),
+                  [variableName, t.stringLiteral(stateName.name)]
+                )
               )
             );
+
             const parentPath = p.findParent((path) =>
               path.isVariableDeclaration()
             ) as NodePath<t.VariableDeclaration>;
+
             if (parentPath) {
+              if (parentPath.node.kind === "const") {
+                parentPath.node.kind = "let";
+              }
               parentPath.insertAfter(applyStatement);
             }
           }
