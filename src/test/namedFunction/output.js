@@ -11,7 +11,7 @@ const SampleComponent = ((
       setCount = this.apply(setCount, "count");
       useEffect.bind(this)(() => {
         const interval = setInterval(() => {
-          setCount(prevCount => prevCount + 1);
+          this.setCount(prevCount => prevCount + 1);
         }, 1000);
         return () => clearInterval(interval);
       }, []);

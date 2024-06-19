@@ -10,7 +10,7 @@ const SampleComponent = ((
       let [count, setCount] = useState.bind(this)(0);
       setCount = this.apply(setCount, "count");
       const handleClick = () => {
-        setCount(count + 1);
+        this.setCount(this.count + 1);
       };
       this.count = count;
       this.setCount = setCount;

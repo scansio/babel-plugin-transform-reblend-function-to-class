@@ -173,9 +173,21 @@ const processFunction: ProcessFunction = (path, node, t) => {
             ? t.isIdentifier(ident.value) && ident.value.name === p.node.name
             : t.isIdentifier(ident) && ident.name === p.node.name
         );
+        const isVariableDeclarator =
+          t.isVariableDeclarator(p.parentPath.container as any) ||
+          t.isVariableDeclarator(p.parent as any);
+        const isAssignmentExpression = t.isAssignmentExpression(
+          p.parent as any
+        );
+        const isFunctionDeclaration = t.isFunctionDeclaration(p.parent as any);
+        const isObjectProperty = t.isObjectProperty(p.parent as any);
         if (
           !t.isThisExpression((p.parent as any).object) &&
-          !t.isThisExpression((p.parent as any).object?.object)
+          !t.isThisExpression((p.parent as any).object?.object) &&
+          !isVariableDeclarator &&
+          !isAssignmentExpression &&
+          !isFunctionDeclaration &&
+          !isObjectProperty
         ) {
           if (hasThisId) {
             p.replaceWith(
@@ -254,8 +266,9 @@ const processFunction: ProcessFunction = (path, node, t) => {
       },
     };
 
-    path.scope.traverse(renderReturnStatement!, replaceIdentifiers);
+    path.scope.traverse(initMethod!, replaceIdentifiers);
     path.scope.traverse(initMethod!, hookBinding);
+    path.scope.traverse(renderReturnStatement!, replaceIdentifiers);
 
     const classBody = [constructorMethod, initMethod, renderMethod];
     const classDecl = t.classDeclaration(

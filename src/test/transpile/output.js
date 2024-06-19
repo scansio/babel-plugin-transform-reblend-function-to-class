@@ -9,7 +9,7 @@ class App extends Reblend {
     let [state, setState] = useState.bind(this)(0);
     setState = this.apply(setState, "state");
     setInterval(() => {
-      setState(state + 1);
+      this.setState(this.state + 1);
     }, 1000);
     function ts() {
       console.log("this");
