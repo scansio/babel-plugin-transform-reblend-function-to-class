@@ -18,19 +18,20 @@ const App = ((
       this.setState = setState;
     }
     html() {
-      return <>
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload. {this.state}
-          </p>
-          <a className="App-link" href="https://reblendjs.org" target="_blank" rel="noopener noreferrer">
-            Learn Reblend
-          </a>
-        </header>
-      </div>
-    </>;
+      return /*#__PURE__*/Reblend.construct.bind(this)(Reblend.bind(this), null, /*#__PURE__*/Reblend.construct.bind(this)("div", {
+        className: "App"
+      }, /*#__PURE__*/Reblend.construct.bind(this)("header", {
+        className: "App-header"
+      }, /*#__PURE__*/Reblend.construct.bind(this)("img", {
+        src: logo,
+        className: "App-logo",
+        alt: "logo"
+      }), /*#__PURE__*/Reblend.construct.bind(this)("p", null, "Edit ", /*#__PURE__*/Reblend.construct.bind(this)("code", null, "src/App.js"), " and save to reload. ", this.state), /*#__PURE__*/Reblend.construct.bind(this)("a", {
+        className: "App-link",
+        href: "https://reblendjs.org",
+        target: "_blank",
+        rel: "noopener noreferrer"
+      }, "Learn Reblend"))));
     }
   };
 })(

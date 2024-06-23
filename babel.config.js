@@ -1,3 +1,3 @@
 module.exports = {
-  plugins: ["@babel/plugin-syntax-jsx"],
+  plugins: ["babel-plugin-transform-reblend-jsx"],
 };

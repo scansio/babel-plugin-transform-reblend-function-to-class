@@ -19,10 +19,7 @@ const SampleComponent = ((
       this.setCount = setCount;
     }
     html() {
-      return <div>
-      <p>Count: {this.count}</p>
-      <p>Hello, {this.props.name}!</p>
-    </div>;
+      return /*#__PURE__*/Reblend.construct.bind(this)("div", null, /*#__PURE__*/Reblend.construct.bind(this)("p", null, "Count: ", this.count), /*#__PURE__*/Reblend.construct.bind(this)("p", null, "Hello, ", this.props.name, "!"));
     }
   };
 })(

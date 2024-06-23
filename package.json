@@ -17,13 +17,9 @@
   ],
   "author": "Emmanuel Elom <scansioquielom@gmail.com>",
   "license": "MIT",
-  "dependencies": {
-    "@babel/core": "^7.24.7",
-    "@babel/plugin-syntax-jsx": "^7.24.7"
-  },
   "devDependencies": {
-    "@babel/preset-react": "^7.24.7",
     "@types/jest": "^29.5.12",
+    "babel-plugin-transform-reblend-jsx": "^7.24.21",
     "jest": "^29.7.0",
     "typescript": "^5.4.5"
   }

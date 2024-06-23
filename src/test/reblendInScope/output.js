@@ -5,10 +5,8 @@ const SampleComponent = function (props) {
     count,
     increment
   } = useCounter();
-  return <div>
-      <p>Count: {count}</p>
-      <button onClick={increment}>Increment</button>
-      <p>Hello, {props.name}!</p>
-    </div>;
+  return /*#__PURE__*/Reblend.construct.bind(this)("div", null, /*#__PURE__*/Reblend.construct.bind(this)("p", null, "Count: ", count), /*#__PURE__*/Reblend.construct.bind(this)("button", {
+    onClick: increment
+  }, "Increment"), /*#__PURE__*/Reblend.construct.bind(this)("p", null, "Hello, ", props.name, "!"));
 };
 export default SampleComponent;

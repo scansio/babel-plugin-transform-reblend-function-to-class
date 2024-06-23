@@ -15,13 +15,9 @@ const SampleComponent = ((
       this.dispatch = dispatch;
     }
     html() {
-      return <div>
-      <p>Count: {this.count.number.insert()}</p>
-      <button onClick={() => this.dispatch(increment())}>Increment</button>
-      <p>
-        Hello, {this.props.user.names.first} {this.props.user.lastname}!
-      </p>
-    </div>;
+      return /*#__PURE__*/Reblend.construct.bind(this)("div", null, /*#__PURE__*/Reblend.construct.bind(this)("p", null, "Count: ", this.count.number.insert()), /*#__PURE__*/Reblend.construct.bind(this)("button", {
+        onClick: () => this.dispatch(increment())
+      }, "Increment"), /*#__PURE__*/Reblend.construct.bind(this)("p", null, "Hello, ", this.props.user.names.first, " ", this.props.user.lastname, "!"));
     }
   };
 })(

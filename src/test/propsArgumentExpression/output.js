@@ -16,11 +16,9 @@ const SampleComponent = ((
       this.increment = increment;
     }
     html() {
-      return <div>
-      <p>Count: {this.count}</p>
-      <button onClick={this.increment}>Increment</button>
-      <p>Hello, {this.props.name}!</p>
-    </div>;
+      return /*#__PURE__*/Reblend.construct.bind(this)("div", null, /*#__PURE__*/Reblend.construct.bind(this)("p", null, "Count: ", this.count), /*#__PURE__*/Reblend.construct.bind(this)("button", {
+        onClick: this.increment
+      }, "Increment"), /*#__PURE__*/Reblend.construct.bind(this)("p", null, "Hello, ", this.props.name, "!"));
     }
   };
 })(
