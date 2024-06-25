@@ -12,6 +12,7 @@ export default class SampleComponent extends Reblend {
     this.count = count;
     this.setCount = setCount;
     this.handleClick = handleClick;
+    this.handleClick = this.handleClick.bind(this);
   }
   html() {
     return /*#__PURE__*/Reblend.construct.bind(this)("div", null, /*#__PURE__*/Reblend.construct.bind(this)("p", null, "Count: ", this.count), /*#__PURE__*/Reblend.construct.bind(this)("button", {

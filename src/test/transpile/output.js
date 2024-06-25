@@ -22,12 +22,16 @@ class App extends Reblend {
     this.state = state;
     this.setState = setState;
     this.ts = ts;
+    this.ts = this.ts.bind(this);
     this.ats = ats;
+    this.ats = this.ats.bind(this);
     this.tss = tss;
+    this.tss = this.tss.bind(this);
     this.atss = atss;
+    this.atss = this.atss.bind(this);
   }
   html() {
-    return /*#__PURE__*/Reblend.construct.bind(this)(Reblend.bind(this), null, /*#__PURE__*/Reblend.construct.bind(this)("div", {
+    return /*#__PURE__*/Reblend.construct.bind(this)(Reblend, null, /*#__PURE__*/Reblend.construct.bind(this)("div", {
       className: "App"
     }, /*#__PURE__*/Reblend.construct.bind(this)("header", {
       className: "App-header"

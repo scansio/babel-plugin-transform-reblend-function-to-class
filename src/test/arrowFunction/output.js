@@ -18,7 +18,7 @@ const App = ((
       this.setState = setState;
     }
     html() {
-      return /*#__PURE__*/Reblend.construct.bind(this)(Reblend.bind(this), null, /*#__PURE__*/Reblend.construct.bind(this)("div", {
+      return /*#__PURE__*/Reblend.construct.bind(this)(Reblend, null, /*#__PURE__*/Reblend.construct.bind(this)("div", {
         className: "App"
       }, /*#__PURE__*/Reblend.construct.bind(this)("header", {
         className: "App-header"

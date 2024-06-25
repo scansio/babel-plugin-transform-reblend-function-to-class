@@ -17,7 +17,30 @@ const addAssignmentStatements = (
   assignmentStatements: t.ExpressionStatement[]
 ): void => {
   declarations.forEach((declaration) => {
-    if (t.isIdentifier(declaration.id)) {
+    if (t.isArrowFunctionExpression(declaration.init)) {
+      declaredIdentifiers.add(`${(declaration.id as any).name}`);
+      assignmentStatements.push(
+        t.expressionStatement(
+          t.assignmentExpression(
+            "=",
+            t.memberExpression(t.thisExpression(), declaration.id as any),
+            declaration.id as any
+          )
+        )
+      );
+      assignmentStatements.push(
+        t.expressionStatement(
+          t.assignmentExpression(
+            "=",
+            t.memberExpression(t.thisExpression(), declaration.id as any),
+            t.callExpression(
+              t.memberExpression(declaration.id as any, t.identifier("bind")),
+              [t.thisExpression()]
+            )
+          )
+        )
+      );
+    } else if (t.isIdentifier(declaration.id)) {
       declaredIdentifiers.add(declaration.id.name);
       assignmentStatements.push(
         t.expressionStatement(
@@ -124,6 +147,18 @@ const processFunction: ProcessFunction = (path, node, t) => {
               "=",
               t.memberExpression(t.thisExpression(), statement.id as any),
               statement.id as any
+            )
+          )
+        );
+        assignmentStatements.push(
+          t.expressionStatement(
+            t.assignmentExpression(
+              "=",
+              t.memberExpression(t.thisExpression(), statement.id as any),
+              t.callExpression(
+                t.memberExpression(statement.id as any, t.identifier("bind")),
+                [t.thisExpression()]
+              )
             )
           )
         );
