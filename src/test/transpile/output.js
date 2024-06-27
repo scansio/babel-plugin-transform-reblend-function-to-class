@@ -2,6 +2,7 @@ import logo from "./logo.svg";
 import "./App.css";
 import Reblend, { useState } from "reblendjs";
 class App extends Reblend {
+  static ELEMENT_NAME = "App";
   constructor() {
     super();
   }

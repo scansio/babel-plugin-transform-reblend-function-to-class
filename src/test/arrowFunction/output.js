@@ -5,6 +5,7 @@ const App = ((
   /* Transformed from function to class */
 ) => {
   return class extends Reblend {
+    static ELEMENT_NAME = "App";
     constructor() {
       super();
     }

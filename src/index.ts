@@ -305,7 +305,28 @@ const processFunction: ProcessFunction = (path, node, t) => {
     path.scope.traverse(initMethod!, hookBinding);
     path.scope.traverse(renderReturnStatement!, replaceIdentifiers);
 
-    const classBody = [constructorMethod, initMethod, renderMethod];
+    const classBody = [
+      t.classProperty(
+        t.identifier("ELEMENT_NAME"),
+        t.stringLiteral(
+          // @ts-ignore
+          node.id
+            ? // @ts-ignore
+              node.id.name
+            : (path.parent as t.VariableDeclarator)?.id
+            ? ((path.parent as t.VariableDeclarator).id as t.Identifier).name
+            : "Anonymous"
+        ),
+        null,
+        null,
+        undefined,
+        true // to indicate that it's a static property
+      ),
+      constructorMethod,
+      initMethod,
+      renderMethod,
+    ];
+
     const classDecl = t.classDeclaration(
       //@ts-ignore
       node.id ? t.identifier(node.id.name) : null,

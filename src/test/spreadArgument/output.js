@@ -5,6 +5,7 @@ const SampleComponent = ((
   /* Transformed from function to class */
 ) => {
   return class extends Reblend {
+    static ELEMENT_NAME = "SampleComponent";
     constructor() {
       super();
     }

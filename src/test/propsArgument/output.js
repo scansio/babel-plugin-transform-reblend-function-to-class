@@ -1,5 +1,6 @@
 import Reblend, { useState } from 'reblendjs';
 class SampleComponent extends Reblend {
+  static ELEMENT_NAME = "SampleComponent";
   constructor() {
     super();
   }
