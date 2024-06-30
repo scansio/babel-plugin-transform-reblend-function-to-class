@@ -49,6 +49,8 @@ const MyComponent = () => {
 ### Output
 
 ```jsx
+import { useState } from 'reblendjs';
+
 class MyComponent extends Reblend {
   static ELEMENT_NAME = "MyComponent";
 
