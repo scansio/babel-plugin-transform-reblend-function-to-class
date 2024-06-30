@@ -1,4 +1,4 @@
-# Babel Plugin: Transform Functions to ES6 Classes
+# Babel Plugin For Reblendjs: Transform Functions to ES6 Classes
 
 This Babel plugin transforms JavaScript functions containing JSX into ES6 classes, facilitating the migration from function-based components to class-based components. It handles various nuances such as function bindings and state management hooks.
 
