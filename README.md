@@ -57,10 +57,14 @@ class MyComponent extends Reblend {
   }
 
   init() {
-    this.count = 0;
+    let [count, setCount] = useState.bind(this)(0);
+    this.count = count;
     this.setCount = this.setCount.bind(this);
     this.apply(this.setCount, "count");
-
+    const handleClick = () => {
+      setCount(count + 1);
+    };
+    this.handleClick = handleClick
     this.handleClick = this.handleClick.bind(this);
   }
 
